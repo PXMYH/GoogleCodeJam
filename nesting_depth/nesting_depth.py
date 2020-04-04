@@ -24,10 +24,6 @@ def nestingPair(nums):
     for index, num in enumerate(nums):
         current_digit = num
 
-        # if current_digit == 0:
-        #     nesting_pair_queue.append(str(num))
-        #     continue
-        
         if current_digit == pre_digit:
             nesting_pair_queue.append(str(current_digit))
         
@@ -36,13 +32,16 @@ def nestingPair(nums):
                 open_cnt = current_digit
                 nesting_pair_queue.append(open_cnt*'(')
             else:
-                nesting_pair_queue.append((open_cnt - close_cnt) * '(')
+                nesting_pair_queue.append((current_digit-(open_cnt - close_cnt)) * '(')
+                open_cnt = current_digit
             
             nesting_pair_queue.append(str(current_digit))
 
         if current_digit < pre_digit:
             close_cnt = pre_digit - current_digit
             nesting_pair_queue.append(close_cnt * ')')
+            open_cnt -= close_cnt
+            close_cnt = 0
             nesting_pair_queue.append(str(current_digit))
 
         pre_digit = current_digit
@@ -57,13 +56,14 @@ def nestingPair(nums):
 # nums = [4]
 # nums = [0,0,0,0]
 # nums = [2,2,1]
-nums = [1,0,1]
+# nums = [1,0,1]
+# nums = [4,0,1,5]
+nums = [4,1,2,0,1,5]
 pair = nestingPair(nums)
 print("nesting string = {}".format(pair))
 
-t = int(input()) # read a line with a single integer
-for i in range(1, t + 1): # number of testcases
-    # read in each time to form a testcase
-    nums = [int(s) for s in str(input().strip())]
-    print("nums = {}".format(nums))
-    print('Case #{}: {}'.format(i, nestingPair(nums)))
+# t = int(input()) # read a line with a single integer
+# for i in range(1, t + 1): # number of testcases
+#     # read in each time to form a testcase
+#     nums = [int(s) for s in str(input().strip())]
+#     print('Case #{}: {}'.format(i, nestingPair(nums)))
